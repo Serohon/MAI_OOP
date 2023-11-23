@@ -1,6 +1,5 @@
 #include <iostream>
-#include <map>
-#include <vector>
+#include <list>
 #pragma once
 template <typename T>
 class MyAllocator {
@@ -15,19 +14,15 @@ public:
         using other = MyAllocator<U>;
     };
 
-    MyAllocator(size_type block_size = 10) noexcept : block_size_(block_size){}
+    MyAllocator() {}
 
     T* allocate(size_type n) {
-        if (n > block_size_) {
-            throw std::bad_alloc();
-        }
-        return reinterpret_cast<T*>(::operator new(n * sizeof(T)));
+        return static_cast<T*>(::operator new(n * sizeof(T)));
     }
     
-    void deallocate(T* p, size_type n) noexcept {
+    void deallocate(T* p, size_t n) noexcept {
         ::operator delete(p);
     }
 private:
-    size_type block_size_;
-    T* _buffer;
+    std::list<T*> memoryBlocks;
 };

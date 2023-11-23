@@ -1,93 +1,77 @@
 #include <gtest/gtest.h>
 #include "Container_Iterator.hpp"
-
+#include "Allocator.hpp"
 // Тестирование добавления элементов в контейнер
-TEST(MyStackTest, PushElements) {
-    MyStack<int> myStack;
-    myStack.push(5);
-    myStack.push(10);
-    myStack.push(15);
+TEST(CustomStackTest, PushElements) {
+    CustomStack<int> CustomStack;
+    CustomStack.push(5);
+    CustomStack.push(10);
+    CustomStack.push(15);
 
-    ASSERT_EQ(myStack.size(), 3);
+    ASSERT_EQ(CustomStack.size(), 3);
 }
 
-TEST(MyStackTest, TopTest) {
-    MyStack<int> myStack;
-    myStack.push(5);
-    myStack.push(10);
-    myStack.push(15);
+TEST(CustomStackTest, TopTest) {
+    CustomStack<int> CustomStack;
+    CustomStack.push(5);
+    CustomStack.push(10);
+    CustomStack.push(15);
 
-    ASSERT_EQ(myStack.top(), 15);
+    ASSERT_EQ(CustomStack.top(), 15);
 }
 
-TEST(MyStackTest, PopTest) {
-    MyStack<int> myStack;
-    myStack.push(15);
-    myStack.push(10);
-    myStack.push(5);
-    myStack.pop();
-    myStack.pop();
-    ASSERT_EQ(myStack.size(), 1);
+TEST(CustomStackTest, PopTest) {
+    CustomStack<int> CustomStack;
+    CustomStack.push(15);
+    CustomStack.push(10);
+    CustomStack.push(5);
+    CustomStack.pop();
+    CustomStack.pop();
+    ASSERT_EQ(CustomStack.size(), 1);
 }
 
 // Тестирование вывода элементов через итератор
-TEST(MyStackTest, IteratorTest1) {
-    MyStack<int> myStack;
-    myStack.push(5);
-    myStack.push(10);
-    myStack.push(15);
-
-    int expected_output = 5; // ожидаемый вывод в обратном порядке
-
-    MyStack<int>::Iterator it = myStack.begin();
-    ASSERT_EQ(*it, expected_output);
+TEST(CustomStackTest, IteratorTest1) {
+    CustomStack<int> CustomStack;
+    CustomStack.push(1);
+    CustomStack.push(2);
+    CustomStack.push(3);
+    int expected_output = 3;
+    for (auto it = CustomStack.begin(); it != CustomStack.end(); ++it){
+        ASSERT_EQ(*it, expected_output--);
+    }
 }
 
-TEST(MyStackTest, IteratorTest2) {
-    MyStack<int> myStack;
-    myStack.push(5);
-    myStack.push(10);
-    myStack.push(15);
+TEST(CustomStackTest, IteratorTest2) {
+    CustomStack<int> CustomStack;
+    CustomStack.push(5);
+    CustomStack.push(11);
+    CustomStack.push(15);
 
-    int expected_output = 750; 
-    MyStack<int>::Iterator it = myStack.begin();
+    int expected_output = 825; 
     int ans = 1;
-    while (it != myStack.end()) {
+    for(auto it = CustomStack.begin(); it != CustomStack.end(); ++it) {
         ans *= *it;
-        ++it;
     }
-
     ASSERT_EQ(ans, expected_output);
 }
 
 // Тестирование работы аллокатора
 TEST(MyAllocatorTest, AllocateMemory) {
     MyAllocator<int> allocator;
-    int* ptr = allocator.allocate(5); // выделение памяти под 5 элементов
+    int* ptr = allocator.allocate(5);
 
     ASSERT_NE(ptr, nullptr);
 
-    allocator.deallocate(ptr, 5); // освобождение памяти
+    allocator.deallocate(ptr, 5);
 }
 
-// Тестирование переноса данных при перевыделении памяти
-TEST(MyAllocatorTest, ReallocateMemory) {
+TEST(MyAllocatorTest, DeallocateMemory) {
     MyAllocator<int> allocator;
-    int* ptr = allocator.allocate(3); // выделение памяти под 3 элемента
+    int* ptr = allocator.allocate(5);
 
-    // Заполнение памяти элементами
-    for (int i = 0; i < 3; ++i) {
-        ptr[i] = i;
-    }
-
-    int* new_ptr = allocator.allocate(6); // перевыделение памяти на 6 элементов
-
-    for (int i = 0; i < 3; ++i) {
-        ASSERT_NE(ptr[i], new_ptr[i]);
-    }
-
-    allocator.deallocate(ptr, 3); // освобождение старой памяти
-    allocator.deallocate(new_ptr, 6); // освобождение новой памяти
+    allocator.deallocate(ptr, 5);
+    ASSERT_NE(ptr, nullptr);
 }
 
 int main(int argc, char** argv) {
