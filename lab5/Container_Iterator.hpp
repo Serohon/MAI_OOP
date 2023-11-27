@@ -2,21 +2,20 @@
 #include <iostream>
 #include <stdexcept>
 #include <memory>
+#include "Allocator.hpp"
 
 template <typename T>
+struct Node {
+    T data;
+    Node<T>* next;
+    Node(const T& value) : data(value), next(nullptr) {}
+};
+template <typename T, typename Allocator = std::allocator<T>>
 class CustomStack {
 public:
     using value_type = T;
-    using allocator_type = std::allocator<T>;
+    using allocator_type = Allocator;
     using size_type = std::size_t;
-
-private:
-    struct Node {
-        value_type* data;
-        Node* next;
-        Node(value_type* value) : data(value), next(nullptr) {}
-    };
-
 public:
     class iterator {
     public:
@@ -26,7 +25,7 @@ public:
         using pointer = T*;
         using reference = T&;
 
-        iterator(Node* node) : currentNode(node) {}
+        iterator(Node<T>* node) : currentNode(node) {}
 
         iterator& operator++() {
             if (currentNode != nullptr) {
@@ -50,7 +49,7 @@ public:
         }
 
         reference operator*() const {
-            return *(currentNode->data);
+            return currentNode->data;
         }
 
         pointer operator->() const {
@@ -58,7 +57,7 @@ public:
         }
 
     private:
-        Node* currentNode;
+        Node<T>* currentNode;
     };
 
     using const_iterator = iterator;
@@ -66,10 +65,8 @@ public:
     CustomStack() : head(nullptr), stackSize(0) {}
 
     void push(const value_type& value) {
-        value_type* newValue = allocator.allocate(1);
-        allocator.construct(newValue, value);
-        Node* newNode = nodeAllocator.allocate(1);
-        newNode->data = newValue;
+        Node<T>* newNode = allocator.allocate(1);
+        newNode->data = value;
         newNode->next = head;
         head = newNode;
         ++stackSize;
@@ -78,11 +75,9 @@ public:
         if (empty()) {
             throw std::out_of_range("Stack is empty");
         }
-        Node* temp = head;
+        Node<T>* temp = head;
         head = head->next;
-        allocator.destroy(temp->data);
-        allocator.deallocate(temp->data, 1);
-        nodeAllocator.deallocate(temp, 1);
+        allocator.deallocate(temp, 1);
         --stackSize;
     }
 
@@ -90,14 +85,14 @@ public:
         if (empty()) {
             throw std::out_of_range("Stack is empty");
         }
-        return *(head->data);
+        return head->data;
     }
 
     const value_type& top() const {
         if (empty()) {
             throw std::out_of_range("Stack is empty");
         }
-        return *(head->data);
+        return head->data;
     }
     bool empty() const {
         return stackSize == 0;
@@ -126,8 +121,7 @@ public:
 
 
 private:
-    Node* head;
+    Node<T>* head;
     size_type stackSize;
     allocator_type allocator;
-    typename allocator_type::template rebind<Node>::other nodeAllocator;
 };

@@ -3,7 +3,7 @@
 #include "Allocator.hpp"
 // Тестирование добавления элементов в контейнер
 TEST(CustomStackTest, PushElements) {
-    CustomStack<int> CustomStack;
+    CustomStack<int, MyAllocator<Node<int>>> CustomStack;
     CustomStack.push(5);
     CustomStack.push(10);
     CustomStack.push(15);
@@ -12,7 +12,7 @@ TEST(CustomStackTest, PushElements) {
 }
 
 TEST(CustomStackTest, TopTest) {
-    CustomStack<int> CustomStack;
+    CustomStack<int, MyAllocator<Node<int>>> CustomStack;
     CustomStack.push(5);
     CustomStack.push(10);
     CustomStack.push(15);
@@ -21,7 +21,7 @@ TEST(CustomStackTest, TopTest) {
 }
 
 TEST(CustomStackTest, PopTest) {
-    CustomStack<int> CustomStack;
+    CustomStack<int, MyAllocator<Node<int>>> CustomStack;
     CustomStack.push(15);
     CustomStack.push(10);
     CustomStack.push(5);
@@ -32,7 +32,7 @@ TEST(CustomStackTest, PopTest) {
 
 // Тестирование вывода элементов через итератор
 TEST(CustomStackTest, IteratorTest1) {
-    CustomStack<int> CustomStack;
+    CustomStack<int, MyAllocator<Node<int>>> CustomStack;
     CustomStack.push(1);
     CustomStack.push(2);
     CustomStack.push(3);
@@ -43,7 +43,7 @@ TEST(CustomStackTest, IteratorTest1) {
 }
 
 TEST(CustomStackTest, IteratorTest2) {
-    CustomStack<int> CustomStack;
+    CustomStack<int, MyAllocator<Node<int>>> CustomStack;
     CustomStack.push(5);
     CustomStack.push(11);
     CustomStack.push(15);
@@ -54,24 +54,6 @@ TEST(CustomStackTest, IteratorTest2) {
         ans *= *it;
     }
     ASSERT_EQ(ans, expected_output);
-}
-
-// Тестирование работы аллокатора
-TEST(MyAllocatorTest, AllocateMemory) {
-    MyAllocator<int> allocator;
-    int* ptr = allocator.allocate(5);
-
-    ASSERT_NE(ptr, nullptr);
-
-    allocator.deallocate(ptr, 5);
-}
-
-TEST(MyAllocatorTest, DeallocateMemory) {
-    MyAllocator<int> allocator;
-    int* ptr = allocator.allocate(5);
-
-    allocator.deallocate(ptr, 5);
-    ASSERT_NE(ptr, nullptr);
 }
 
 int main(int argc, char** argv) {

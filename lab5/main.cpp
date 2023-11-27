@@ -8,16 +8,16 @@ int factorial(int n) {
 }
 
 int main() {
-    std::map<int, int, std::less<>, MyAllocator<std::pair<const int, int>>> myMapAllocator;
+    std::cout << "where" << std::endl;
+    std::map<int, int, std::less<>, MyAllocator<std::pair<const int, int>, 1000>> myMapAllocator;
      for (int i = 0; i < 10; ++i) {
         myMapAllocator.emplace(i, factorial(i));
     }
-
     // Вывод значений на экран
     for (const auto& pair : myMapAllocator) {
         std::cout << pair.first << " " << pair.second << std::endl;
     }
-    MyAllocator<int> allocator;
+    MyAllocator<int, 0> allocator;
     int* ptr = allocator.allocate(3);
 
     for (int i = 0; i < 3; ++i) {
@@ -33,7 +33,7 @@ int main() {
     allocator.deallocate(ptr, 3);
     allocator.deallocate(new_ptr, 6);
 
-    CustomStack<int> myStack;
+    CustomStack<int, MyAllocator<Node<int>>> myStack;
 
     myStack.push(5);
     myStack.push(10);
@@ -42,15 +42,6 @@ int main() {
         std::cout << *it << " ";
     }
     std::cout << std::endl;
-
-    const CustomStack<int>& constStack = myStack;
-    CustomStack<int>::const_iterator cit = constStack.cbegin();
-    while (cit != constStack.cend()) {
-        std::cout << *cit << " ";
-        ++cit;
-    }
-    std::cout << std::endl;
-
 
     while (!myStack.empty()) {
         std::cout << myStack.top() << " ";
