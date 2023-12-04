@@ -6,7 +6,6 @@
 class TextObserver : public IFightObserver {
 private:
     TextObserver() {}
-
 public:
     static std::shared_ptr<IFightObserver> get() {
         static TextObserver instance;
