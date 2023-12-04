@@ -1,5 +1,0 @@
-/home/sanya/OPP/lab6/build/CMakeFiles/lab6.dir
-/home/sanya/OPP/lab6/build/CMakeFiles/tests.dir
-/home/sanya/OPP/lab6/build/CMakeFiles/test.dir
-/home/sanya/OPP/lab6/build/CMakeFiles/edit_cache.dir
-/home/sanya/OPP/lab6/build/CMakeFiles/rebuild_cache.dir
