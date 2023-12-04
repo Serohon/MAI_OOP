@@ -1,0 +1,1 @@
+/usr/bin/g++ -g CMakeFiles/lab6.dir/main.cpp.o CMakeFiles/lab6.dir/NPC.cpp.o CMakeFiles/lab6.dir/WanderingKnight.cpp.o CMakeFiles/lab6.dir/Dragon.cpp.o CMakeFiles/lab6.dir/Princess.cpp.o -o lab6 

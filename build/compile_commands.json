@@ -1,0 +1,32 @@
+[
+{
+  "directory": "/home/sanya/OPP/lab6/build",
+  "command": "/usr/bin/g++   -g -o CMakeFiles/lab6.dir/main.cpp.o -c /home/sanya/OPP/lab6/main.cpp",
+  "file": "/home/sanya/OPP/lab6/main.cpp"
+},
+{
+  "directory": "/home/sanya/OPP/lab6/build",
+  "command": "/usr/bin/g++   -g -o CMakeFiles/lab6.dir/NPC.cpp.o -c /home/sanya/OPP/lab6/NPC.cpp",
+  "file": "/home/sanya/OPP/lab6/NPC.cpp"
+},
+{
+  "directory": "/home/sanya/OPP/lab6/build",
+  "command": "/usr/bin/g++   -g -o CMakeFiles/lab6.dir/WanderingKnight.cpp.o -c /home/sanya/OPP/lab6/WanderingKnight.cpp",
+  "file": "/home/sanya/OPP/lab6/WanderingKnight.cpp"
+},
+{
+  "directory": "/home/sanya/OPP/lab6/build",
+  "command": "/usr/bin/g++   -g -o CMakeFiles/lab6.dir/Dragon.cpp.o -c /home/sanya/OPP/lab6/Dragon.cpp",
+  "file": "/home/sanya/OPP/lab6/Dragon.cpp"
+},
+{
+  "directory": "/home/sanya/OPP/lab6/build",
+  "command": "/usr/bin/g++   -g -o CMakeFiles/lab6.dir/Princess.cpp.o -c /home/sanya/OPP/lab6/Princess.cpp",
+  "file": "/home/sanya/OPP/lab6/Princess.cpp"
+},
+{
+  "directory": "/home/sanya/OPP/lab6/build",
+  "command": "/usr/bin/g++   -g -o CMakeFiles/tests.dir/tests.cpp.o -c /home/sanya/OPP/lab6/tests.cpp",
+  "file": "/home/sanya/OPP/lab6/tests.cpp"
+}
+]
