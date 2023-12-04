@@ -4,7 +4,7 @@ find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 add_executable(lab6 main.cpp NPC.cpp WanderingKnight.cpp Dragon.cpp Princess.cpp)
 enable_testing()
-add_executable(tests tests.cpp NPC.cpp WanderingKnight.cpp Dragon.cpp Princess.cpp)
+add_executable(tests tests.cpp)
 target_link_libraries(tests ${GTEST_LIBRARIES})
 
 add_test(NAME BASIC COMMAND tests)
