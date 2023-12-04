@@ -16,27 +16,10 @@ void Princess::save(std::ostream &os)
     NPC::save(os);
 }
 
-bool Princess::fight(std::shared_ptr<Dragon> other)
-{
-    fight_notify(other, false);
-    return false;
-}
-
-bool Princess::fight(std::shared_ptr<WanderingKnight> other)
-{
-    fight_notify(other, false);
-    return false;
-}
-
-bool Princess::fight(std::shared_ptr<Princess> other)
-{
-    fight_notify(other, false);
-    return false;
-}
-
 bool Princess::accept(std::shared_ptr<NPC> attacker){
-    return attacker->fight(std::dynamic_pointer_cast<Princess>(shared_from_this()));
+    return attacker->visitPrincess(std::dynamic_pointer_cast<Princess>(shared_from_this()));
 }
+
 
 std::ostream &operator<<(std::ostream &os, Princess &knight)
 {
