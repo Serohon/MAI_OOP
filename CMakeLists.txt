@@ -1,0 +1,10 @@
+cmake_minimum_required(VERSION 3.10)
+project(lab7)
+find_package(GTest REQUIRED)
+include_directories(${GTEST_INCLUDE_DIRS})
+add_executable(lab7 main.cpp npc.cpp WanderingKnight.cpp dragon.cpp Princess.cpp)
+enable_testing()
+add_executable(tests tests.cpp)
+target_link_libraries(tests ${GTEST_LIBRARIES})
+
+add_test(NAME BASIC COMMAND tests)
