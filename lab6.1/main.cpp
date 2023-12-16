@@ -2,72 +2,8 @@
 #include "Dragon.hpp"
 #include "WanderingKnight.hpp"
 #include "Princess.hpp"
-// Текстовый наблюдатель
-class TextObserver : public IFightObserver {
-private:
-    TextObserver() {}
-public:
-    static std::shared_ptr<IFightObserver> get() {
-        static TextObserver instance;
-        return std::shared_ptr<IFightObserver>(&instance, [](IFightObserver *) {});
-    }
-
-    void on_fight(const std::shared_ptr<NPC> attacker, const std::shared_ptr<NPC> defender, bool win) override {
-        if (win) {
-            std::cout << std::endl
-                      << "Убийство --------" << std::endl;
-            attacker->print();
-            defender->print();
-        }
-    }
-};
-
-// Фабрики -----------------------------------
-std::shared_ptr<NPC> factory(std::istream &is) {
-    std::shared_ptr<NPC> result;
-    int type{0};
-    if (is >> type) {
-        switch (type) {
-            case DragonType:
-                result = std::make_shared<Dragon>(is);
-                break;
-            case WanderingKnightType:
-                result = std::make_shared<WanderingKnight>(is);
-                break;
-            case PrincessType:
-                result = std::make_shared<Princess>(is);
-                break;
-        }
-    } else
-        std::cerr << "unexpected NPC type:" << type << std::endl;
-
-    if (result)
-        result->subscribe(TextObserver::get());
-
-    return result;
-}
-
-
-std::shared_ptr<NPC> factory(NpcType type, int x, int y) {
-    std::shared_ptr<NPC> result;
-    switch (type) {
-        case DragonType:
-            result = std::make_shared<Dragon>(x, y);
-            break;
-        case WanderingKnightType:
-            result = std::make_shared<WanderingKnight>(x, y);
-            break;
-        case PrincessType:
-            result = std::make_shared<Princess>(x, y);
-            break;
-        default:
-            break;
-    }
-    if (result)
-        result->subscribe(TextObserver::get());
-
-    return result;
-}
+#include "FightObserver.hpp"
+#include "Factory.hpp"
 
 // Сохранение массива в файл
 void save(const set_t &array, const std::string &filename) {

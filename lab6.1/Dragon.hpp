@@ -1,6 +1,6 @@
 #pragma once
 #include "NPC.hpp"
-
+#include "Visitor.hpp"
 struct Dragon final: public NPC
 {
     Dragon(int x, int y);
@@ -8,7 +8,6 @@ struct Dragon final: public NPC
 
     void print() override;
     bool accept(std::shared_ptr<NPC> attacker) override;
-    bool visitPrincess(std::shared_ptr<Princess> other) override;
 
     void save(std::ostream &os) override;
 

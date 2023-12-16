@@ -28,6 +28,8 @@ struct IFightObserver{
     virtual void on_fight(const std::shared_ptr<NPC> attacker,const std::shared_ptr<NPC> defender,bool win) = 0;
 };
 
+class Visitor;
+
 struct NPC :public std::enable_shared_from_this<NPC>
 {
     NpcType type;
@@ -41,16 +43,7 @@ struct NPC :public std::enable_shared_from_this<NPC>
     void subscribe(std::shared_ptr<IFightObserver>observer );
     void fight_notify(const std::shared_ptr<NPC> defender,bool win);
     virtual bool is_close(const std::shared_ptr<NPC> &other, size_t distance) const;
-
-    virtual bool visitDragon(std::shared_ptr<Dragon> other){
-        return false;
-    }
-    virtual bool visitWanderingKnight(std::shared_ptr<WanderingKnight> other){
-        return false;
-    }
-    virtual bool visitPrincess(std::shared_ptr<Princess> other){
-        return false;
-    }
+    NpcType get_type();
     virtual void print() = 0;
     virtual bool accept(std::shared_ptr<NPC> attacker) = 0;
 

@@ -10,15 +10,13 @@ void Dragon::print()
     std::cout << *this;
 }
 
-bool Dragon::visitPrincess(std::shared_ptr<Princess> other){
-    fight_notify(other, true);
-    return true;
+bool Dragon::accept(const std::shared_ptr<NPC> attacker) {
+    std::shared_ptr<Visitor> attacker_visitor = VisitorFactory::CreateVisitor(attacker->get_type());
+    std::shared_ptr<Dragon> defender = std::dynamic_pointer_cast<Dragon>(std::const_pointer_cast<NPC>(shared_from_this()));
+    bool result = attacker_visitor->visit(defender);
+    attacker->fight_notify(defender, result);
+    return result;
 }
-
-bool Dragon::accept(std::shared_ptr<NPC> attacker){
-    return attacker->visitDragon(std::dynamic_pointer_cast<Dragon>(shared_from_this()));
-}
-
 
 void Dragon::save(std::ostream &os) 
 {

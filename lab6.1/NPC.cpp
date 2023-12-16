@@ -5,6 +5,7 @@ NPC::NPC(NpcType t, std::istream &is) : type(t)
 {
     is >> x;
     is >> y;
+
 }
 
 void NPC::subscribe(std::shared_ptr<IFightObserver> observer)
@@ -16,6 +17,11 @@ void NPC::fight_notify(const std::shared_ptr<NPC> defender, bool win)
 {
     for (auto &o : observers)
         o->on_fight(shared_from_this(), defender, win);
+}
+
+NpcType NPC::get_type()
+{
+    return type;
 }
 
 bool NPC::is_close(const std::shared_ptr<NPC> &other, size_t distance) const

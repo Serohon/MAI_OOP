@@ -16,8 +16,12 @@ void Princess::save(std::ostream &os)
     NPC::save(os);
 }
 
-bool Princess::accept(std::shared_ptr<NPC> attacker){
-    return attacker->visitPrincess(std::dynamic_pointer_cast<Princess>(shared_from_this()));
+bool Princess::accept(const std::shared_ptr<NPC> attacker) {
+    std::shared_ptr<Visitor> attacker_visitor = VisitorFactory::CreateVisitor(attacker->get_type());
+    std::shared_ptr<Princess> defender = std::dynamic_pointer_cast<Princess>(std::const_pointer_cast<NPC>(shared_from_this()));
+    bool result = attacker_visitor->visit(defender);
+    attacker->fight_notify(defender, result);
+    return result;
 }
 
 
