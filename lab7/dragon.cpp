@@ -1,6 +1,7 @@
 #include "WanderingKnight.h"
 #include "Princess.h"
 #include "dragon.h"
+// Unluck
 Dragon::Dragon(int x, int y) : NPC(DragonType, x, y) {}
 Dragon::Dragon(std::istream &is) : NPC(DragonType, is) {}
 
